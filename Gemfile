@@ -10,7 +10,7 @@ gem 'rails', '~> 5.1.2'
 
 group :production do
   # Use pg as the production database for Active Record
-  gem 'pg'
+  gem 'pg', '~> 0.20'
   gem 'rails_12factor'
 end
 
@@ -37,8 +37,6 @@ gem 'jbuilder', '~> 2.5'
 gem 'thor', '0.19.1'
 
 gem 'devise'
-
-gem 'pg'
 
 group :development do
   gem 'listen', '~> 3.0.5'
