@@ -1,7 +1,10 @@
 class WelcomeController < ApplicationController
-  def index
-  end
+	before_action :authenticate_user!
+	protect_from_forgery with: :exception
 
-  def about
-  end
+	def index
+	end
+
+	def about
+	end
 end
