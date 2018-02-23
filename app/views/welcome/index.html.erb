@@ -1,2 +1,27 @@
-<h1>Welcome#index</h1>
-<p>Find me in app/views/welcome/index.html.erb</p>
+<div class="jumbotron">
+	<h1>Blocipedia</h1>
+	<p>Create and share Markdown Wikis.</p>
+	<p>
+</div>
+
+	<div class="row">
+	<div class="col-md-6">
+		<h2>Create Public Wikis</h2>
+		<%= link_to "Free Plan", new_wiki_path, class: 'btn btn-primary' %>
+	</div>
+
+
+	<div class="col-md-6">
+		<h2>Create Private Wikis</h2>
+
+
+		<% if current_user.standard? %>
+			<%= link_to "Premium Membership", new_charge_path, class: 'btn btn-primary' %></p>
+		<% end %>
+		<% if current_user.premium? %>
+			<%= link_to "Premium Membership", new_wiki_path, class: 'btn btn-primary' %></p>
+  		<% end %>
+
+  		
+	</div>
+</div>

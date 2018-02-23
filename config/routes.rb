@@ -1,5 +1,7 @@
 Rails.application.routes.draw do
 
+	get 'charges/new'
+
 	resources :wikis
   	
   	devise_for :users

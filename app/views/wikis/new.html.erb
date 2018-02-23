@@ -7,6 +7,17 @@
 			<li>Be informative.</li>
 			<li>Dog-friendly.</li>
 		</ul>
+		<hr>
+ 		<p>Markdown Cheatsheet:</p>
+ 		<ul>
+   			<li><strong>**bold**</strong></li>
+			<li>_underline_</li>
+			<li><i>*italic*</i></li>
+			<li>`code`</li>
+			<li>--- horizontal rule</li>
+			<li><mark>==highlight==</mark></li>
+			<li>links[I'm an inline-style link](https://www.google.com)</li>
+ 		</ul>
 	</div>
 	<div class="col-md-8">
 		<%= form_for @wiki do |f| %>
@@ -18,6 +29,15 @@
 				<%= f.label :body %>
 				<%= f.text_area :body, rows: 8, class: 'form-control', placeholder: "Enter Wiki body" %>
 			</div>
+
+			<% if current_user.admin? || current_user.premium? %>
+				<div class="form_group">
+					<%= f.label :private, class: 'checkbox' do %>
+						<%= f.check_box :private, class: 'checkbox inline' %> Private Wiki
+					<% end %>
+				</div>
+			<% end %>
+
 			<div class="form-group">
 				<%= f.submit "Save", class: 'btn btn-success' %>
 			</div>

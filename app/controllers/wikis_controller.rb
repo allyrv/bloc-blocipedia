@@ -1,5 +1,5 @@
+include ApplicationHelper
 class WikisController < ApplicationController
-  before_action :authenticate_user!,  except: [:index, :show] 
   
   def index
   	@wikis = Wiki.all
@@ -7,6 +7,14 @@ class WikisController < ApplicationController
 
   def show
     @wiki = Wiki.find(params[:id])
+    unless (@wiki.private == false || @wiki.private == nil) || current_user.premium? || current_user.admin?
+      flash[:alert] = "You must be a premium user to view private topics."
+      if current_user
+        redirect_to new_charge_path
+      else
+        redirect_to new_user_registration_path
+      end
+    end
   end
 
   def new
@@ -38,12 +46,11 @@ class WikisController < ApplicationController
     @wiki = Wiki.find(params[:id])
     @wiki.title = params[:wiki][:title]
     @wiki.body = params[:wiki][:body]
+    authorize @wiki
 
     unless params[:wiki][:private].nil?
       @wiki.private = params[:wiki][:private]
     end
-
-    authorize @wiki
 
     if @wiki.save
       flash[:notice] = "Wiki was updated"
@@ -57,11 +64,9 @@ class WikisController < ApplicationController
   def destroy
     @wiki = Wiki.find(params[:id])
 
-    authorize @wiki
-
     if @wiki.destroy
       flash[:notice] = "\"#{@wiki.title}\" was deleted successfully."
-      redirect_to action: :index
+      redirect_to wikis_path
     else
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
