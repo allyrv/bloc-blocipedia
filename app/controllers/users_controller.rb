@@ -25,12 +25,17 @@ class UsersController < ApplicationController
 	end
 
 	def show
+		@user = current_user
 	end
 
 	def downgrade
-		current_user.update_attribute(:role, 'standard')
-
-		flash[:notice] = "#{current_user.email} account has been downgraded"
-		redirect_to root_path
+		if current_user.premium?
+			current_user.standard!
+			flash[:notice] = "You have been downgraded to standard."
+			redirect_to root_path
+		else
+			flash[:error] = "There was an error downgrading your account. Please try again."
+			redirect_to edit_user_registration_path
+		end
 	end
 end

@@ -30,44 +30,41 @@
     <%= f.label :current_password %> <i>(we need your current password to confirm your changes)</i><br />
     <%= f.password_field :current_password, autocomplete: "off" %>
   </div>
-
+  <br>
   <div class="actions">
     <%= f.submit "Update" %>
   </div>
 <% end %>
 
-<h3>Cancel my account</h3>
+  <hr>
 
-<p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
-
-<%= link_to "Back", :back %>
-
-<div class="col-md-6 head-center">
-
-    <h2>Account Info</h2>
-    <p>Your Membership status:
+    <h3>Account Info</h3>
+    <p>Your Membership Status:
       <strong>
         <% if current_user.standard? %>
-          Only a Member
+          Standard User
         <% elsif current_user.premium? %>
-          Premium Member...nice!
+          Premium Member...awesome!
         <% elsif current_user.admin? %>
-          Admin Member
+          Collaborator  
         <% end %>
       </strong>
     </p>
-    
-    <hr>
 
     <% if current_user.standard? %>
-      <h4>Upgrade your membership to a premium account to create private wikis!</h4>
-      <p>The cost is only an annual fee of $15.00</p>
-      <%= link_to "Upgrade to a Premium Membership", new_charge_path, class: 'button' %>
+      <p>Upgrade your membership to a premium account to create private wikis! <br> The cost is only an annual fee of <strong>$15.00</strong></p>
+      <%= button_to "Upgrade Membership", new_charge_path, class: 'button', method: :get %>
+    <% elsif current_user.premium? %>
+      <%= button_to "Downgrade Membership", downgrade_path, data: { confirm: "Are you sure you want to cancel your premium membership and miss out on private wikis?"}, method: :get %>
     <% end %>
-    <% if current_user.premium? %>
-      <%= link_to "Cancel my Premium Membership", charges_path(current_user), method: :delete, class: 'button-small', data: { confirm: "Are you sure you want to cancel your premium membership and miss out on private wikis?" } %>
-    <% end %>
-  </div>
-</div>
+  
+  <hr>
 
+    <h3>Cancel my account</h3>
+      <p>Unhappy? <%= button_to "Cancel my account", registration_path(resource_name), data: { confirm: "Are you sure?" }, method: :delete %></p>
+
+    <br>  
+    
+    <%= link_to "Back", :back %>
+  </div>
 
