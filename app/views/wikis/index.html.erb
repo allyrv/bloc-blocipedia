@@ -9,9 +9,11 @@
 			<div class ="media-body">
 				<h4 class="media-heading">
 					<% if wiki.private? %>
-						<%= link_to wiki.title, wiki, class: "private" %> <small>[private]</small>
+						<%= link_to wiki.title, wiki, class: "private" %> <small>[private]</small><br />
+                        <small>By: <%= wiki.user.email %></small>
 					<% else %>
-						<%= link_to wiki.title, wiki %>
+						<%= link_to wiki.title, wiki %> <br />
+                        <small>By: <%= wiki.user.email %></small>
 					<% end %>
 				</h4>
 			</div>

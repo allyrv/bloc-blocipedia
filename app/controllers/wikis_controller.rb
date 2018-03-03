@@ -1,8 +1,9 @@
 include ApplicationHelper
 class WikisController < ApplicationController
-  
+
+
   def index
-  	@wikis = Wiki.all
+  	@wikis = policy_scope(Wiki)
   end
 
   def show
@@ -70,6 +71,16 @@ class WikisController < ApplicationController
     else
       flash.now[:alert] = "There was an error deleting the wiki."
       render :show
+    end
+  end
+
+  private
+
+  def wiki_params
+    if current_user && current_user.premium?
+      params.require(:wiki).permit(:title, :body, :private)
+    else
+      params.require(:wiki).permit(:title, :body)
     end
   end
 end
