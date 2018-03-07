@@ -3,13 +3,13 @@
 
   <%= form_for [wiki , Collaborator.new] do |c| %>
     <%= email_field_tag :collaborator %>
-    <%= c.submit "Add collaborator", class: 'btn btn-primary', placeholder: "Enter email address", method: :post%>
+    <%= c.submit "Add collaborator", class: 'btn btn-primary', placeholder: "Enter email address"%>
   <% end %>
 
   <% wiki.collaborators.each do |c| %>
     <% user = User.find(c.user_id) %>
     <p><strong><%= user.email %></strong> ---
-    <%= link_to "Delete", wiki_collaborator_index_path(@wiki, c), class: 'btn btn-primary', method: :delete%></p>
+    <%= link_to "Delete", wiki_collaborators_path(@wiki, c), class: 'btn btn-primary', method: :delete%></p>
   <% end %>
 <% end %>
 
